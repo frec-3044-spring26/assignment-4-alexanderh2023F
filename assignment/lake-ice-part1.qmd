@@ -121,6 +121,8 @@ What is the R2 for the regression? Based on the R2, is `year` and `ice_off_doy` 
 
 **Answer 4:**
 
+The R2 for the regression is 0.2055. According to this value, the `year` and `ice_off_doy` variables are not strongly related to each other.
+
 ## Residuals normally distributed
 
 Second, it is important that the residuals from our linear model are normally distributed.  The following is a normal distribution that you can visually compare to:
@@ -151,7 +153,9 @@ Use the [`add_predictions()`](https://modelr.tidyverse.org/reference/add_predict
 **Answer 5:**
 
 ```{r}
-
+library(modelr)
+sunapee <- add_predictions(data = sunapee, model = fit)
+sunapee <- add_residuals(data = sunapee, model = fit)
 ```
 
 Now, to visualize the residuals, use `geom_histogram()` to plot them as a histogram. I recommend using a bin width of 10 in the histogram.
@@ -163,9 +167,11 @@ Show Histogram and answer the following question: do the residuals meet the assu
 **Answer 6:**
 
 ```{r}
-
+ggplot(sunapee) + 
+  geom_histogram(aes(x = resid), binwidth = 10)
 ```
 
+The residuals do not seem to meet the assumptions of the linear regression, as the data is skewed to the left, and not normally distributed.
 
 ## The slope is different from zero
 
